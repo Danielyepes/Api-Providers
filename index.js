@@ -1,14 +1,17 @@
 "use strict";
+//get dependencies
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 
 const app = express();
+//declare port, this change if there is other service run in this port
 const port = 8888;
 
 //imprort model of bd
 var Providers = require("./models/providers");
 
+//add dependencias to app
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -24,13 +27,14 @@ app.get("/api/providers", (req, res) => {
 
 /**
  * GET provider method by ID
+ * param providerID is obtain of url
  */
 app.get("/api/providers/:providerID", (req, res) => {
   let provider = req.params.providerID;
-  Providers.findById(provider, (err, provider) => {
+  Providers.findById(provider, (err, providersResponse) => {
     if (err) res.status(500).send({ message: `Error making request:${err}` });
-    if (!provider) res.status(404).send({ message: `provider NO exist` });
-    res.status(200).send({ provider });
+    if (!providersResponse) res.status(404).send({ message: `provider NO exist` });
+    res.status(200).send({ providersResponse });
   });
 });
 
@@ -42,6 +46,7 @@ app.get("/api/providers/:providerID", (req, res) => {
 app.post("/api/providers", (req, res) => {
   console.log(req.body);
 
+  //declare a provider for get JSON data
   let provider = new Providers();
   provider.firstName = req.body.firstName;
   provider.lastName = req.body.lastName;
@@ -64,11 +69,46 @@ app.post("/api/providers", (req, res) => {
   provider.updatedBy = req.body.updatedBy;
   provider.updatedAt = req.body.updatedAt;
 
+  //save data get of JSON
   provider.save((err,providerStored)=>{
     if (err) res.status(500).send({ message: `Error making POST request:${err}` });
     res.status(200).send({provider:providerStored})
   })
 });
+
+
+/**
+ * PUt method
+ */
+app.put("/api/providers/:providerID", (req, res) => {
+  let providerId = req.params.providerID;
+  let fields = req.body
+  
+    Providers.findByIdAndUpdate(providerId,fields, (err, providerUpdate) => {
+    if (err) res.status(500).send({ message: `Error to delete provider:${err}` });
+    res.status(200).send({providerUpdate})
+  });
+})
+
+/**
+ * Delete method
+ */
+app.delete("/api/providers/:providerID", (req, res) => {
+  let providerId = req.params.providerID;
+  //search record
+  Providers.findById(providerId, (err, provider) => {
+    if (err) res.status(500).send({ message: `Error to delete provider:${err}` });
+    if (!provider) res.status(500).send({ message: "Provider no exist" });
+  
+    provider.remove(err =>{
+      if (err) res.status(500).send({ message: `Error to delete provider:${err}` });
+      res.status(200).send({message:"Provider delete success"})
+    })
+  });
+});
+
+
+
 //stablish conection with database and init app
 mongoose.connect(
   "mongodb://foundation123:foundation123@ds125146.mlab.com:25146/foundation-test1",
@@ -77,7 +117,8 @@ mongoose.connect(
       console.log("ERROR: connecting to Database. " + err);
     }
     console.log("Conection Success");
-
+    
+    //run app in port
     app.listen(port, () => {
       console.log(`Node server running on http://localhost:${port}`);
     });
