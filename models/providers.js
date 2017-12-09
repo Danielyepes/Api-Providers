@@ -7,7 +7,6 @@ ObjectId = Schema.ObjectId;
 //create schema for providers
 var Providers = Schema(
   {
-    _id: ObjectId,
     firstName: String,
     lastName: String,
     middleName: String,
