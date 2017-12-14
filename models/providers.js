@@ -3,8 +3,7 @@
 var mongose = require("mongoose");
 var Schema = mongose.Schema;
 
-ObjectId = Schema.ObjectId;
-//create schema for providers
+
 var Providers = Schema(
   {
     firstName: String,

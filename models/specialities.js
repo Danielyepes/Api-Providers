@@ -3,9 +3,6 @@
 var mongose = require("mongoose");
 var Schema = mongose.Schema;
 
-ObjectId = Schema.ObjectId;
-//create schema for Specialities
-
 var Specialities = Schema(
   {
     name: String,

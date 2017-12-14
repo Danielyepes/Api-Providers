@@ -96,7 +96,7 @@ app.post("/api/providers", (req, res) => {
     provider.specialty.createdAt = specialityStored.createdAt;
     provider.specialty.updatedBy = specialityStored.updatedBy;
     provider.specialty.updatedAt = specialityStored.updatedAt;
-    provider.projectedStartDate = specialityStoredStartDate;
+    provider.projectedStartDate = specialityStored.StartDate;
 
     provider.save((err, providerStored) => {
       if (err)
