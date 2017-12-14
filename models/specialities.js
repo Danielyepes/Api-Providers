@@ -14,4 +14,4 @@ var Specialities = Schema(
   { versionKey: false } //to not add field "_v" in json
 );
 
-models.export = mongose.model("Specialities", Specialities);;
+module.exports = mongose.model("Specialities", Specialities);

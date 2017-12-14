@@ -87,7 +87,7 @@ app.post("/api/providers", (req, res) => {
       return res
         .status(500)
         .send({ message: `Error making POST request:${err}` });
-    res.status(200).send({ provider: specialityStored });
+    res.status(200).send({ speciality: specialityStored });
     //save data get of JSON
     
     provider.specialty._id = specialityStored._id;
