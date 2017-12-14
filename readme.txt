@@ -55,7 +55,6 @@ to recive a JSON in this format
     "updatedBy" : 26760,
     "updatedAt" : "2017-11-29T09:51:21.678Z",
     "specialty" : {
-        "_id" : "5a1ee5e6d0e8cfb9049a7904",
         "name" : "Adolescent Medicine",
         "createdBy" : 5028,
         "createdAt" : "2017-02-23T10:03:08.462Z",
