@@ -12,12 +12,6 @@ var Providers = Schema(
     middleName: String,
     email: String,
     specialty: {
-      _id: ObjectId,
-      name: String,
-      createdBy: Number,
-      createdAt: Date,
-      updatedBy: Number,
-      updatedAt: { type: Date, default: Date.now }
     },
     projectedStartDate: Date,
     employerId: Number,
